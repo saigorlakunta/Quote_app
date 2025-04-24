@@ -1,0 +1,142 @@
+# Quote_app
+
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>తెలుగు కొట్స్ యాప్</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      font-family: 'Noto Serif Telugu', sans-serif;
+      text-align: center;
+      padding: 30px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: #4a148c;
+    }
+
+    .quote-box {
+      background: white;
+      padding: 25px;
+      margin: 20px auto;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .category {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #d32f2f;
+    }
+
+    button {
+      background-color: #4a148c;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #7b1fa2;
+    }
+  </style>
+</head>
+<body>
+  <h1>తెలుగు ప్రేరణాత్మక కొట్స్</h1>
+
+  <div class="quote-box" id="quote-box">
+    <div id="quote">ఇక్కడ మీరు ఒక అందమైన తెలుగు మాట చూడగలరు</div>
+    <div class="category" id="category">వర్గం: జీవితం</div>
+  </div>
+
+  <button onclick="showQuote()">కొత్త మాట చూపించు</button>
+
+  <script>
+    const quotes = [
+      // Life Quotes
+      { category: "జీవితం", text: "జీవితం అనేది పాఠశాల కాదు, కానీ ప్రతి క్షణం ఒక పాఠం." },
+      { category: "జీవితం", text: "సంతోషంగా ఉండాలంటే ఉన్నది సరిగ్గా ఉపయోగించుకో." },
+      { category: "జీవితం", text: "జీవితం ఒక ప్రయాణం, గమ్యం కాదు." },
+      { category: "జీవితం", text: "చిన్న చిన్న విషయాల్లో ఆనందం దొరుకుతుంది." },
+      { category: "జీవితం", text: "జీవితం మార్పులతో నిండిన మాయా ప్రపంచం." },
+      { category: "జీవితం", text: "ప్రతి రోజూ కొత్త ప్రారంభం." },
+      { category: "జీవితం", text: "జీవితం ఓ పుస్తకం, ప్రతి పేజీ కొత్తకథ." },
+      { category: "జీవితం", text: "మన జీవితం మన చేతుల్లోనే ఉంటుంది." },
+      { category: "జీవితం", text: "హృదయం కలిగి జీవించడమే అసలైన విజయం." },
+      { category: "జీవితం", text: "నమ్మకాలు జీవితం మార్చగలవు." },
+
+      // Education Quotes
+      { category: "ఎడ్యుకేషన్", text: "విద్య అనేది మన జీవితానికి వెలుగు." },
+      { category: "ఎడ్యుకేషన్", text: "ఒక మంచి పాఠం జీవితాన్ని మార్చగలదు." },
+      { category: "ఎడ్యుకేషన్", text: "నాలిక sharpen చేయాలంటే విద్య అవసరం." },
+      { category: "ఎడ్యుకేషన్", text: "అధ్యయనం సుదీర్ఘ ప్రయాణం." },
+      { category: "ఎడ్యుకేషన్", text: "పుస్తకాలు మనకి నేస్తాలు." },
+      { category: "ఎడ్యుకేషన్", text: "విద్యనే గుణం, విద్యతోనే మనిషి విలువ పెరుగుతుంది." },
+      { category: "ఎడ్యుకేషన్", text: "జ్ఞానం పెరిగితే మార్గం అర్ధమవుతుంది." },
+      { category: "ఎడ్యుకేషన్", text: "సత్యం శోధించేందుకు విద్య అవసరం." },
+      { category: "ఎడ్యుకేషన్", text: "విద్య ఉన్నది ఎక్కడైనా వెలుగిస్తుంది." },
+      { category: "ఎడ్యుకేషన్", text: "తెలివి చదువులోనే కాదు, ఉపయోగించడంలో ఉంది." },
+
+      // Motivation Quotes
+      { category: "మోటివేషన్", text: "నీ శ్రమే నీ విజయానికి మార్గం." },
+      { category: "మోటివేషన్", text: "సాధించాలంటే మొదట నమ్మాలి." },
+      { category: "మోటివేషన్", text: "విఫలం కావడం ఓ పాఠం మాత్రమే." },
+      { category: "మోటివేషన్", text: "విజయం కోసం కష్టపడే మార్గం ఎప్పుడూ వకిలిగా ఉంటుంది." },
+      { category: "మోటివేషన్", text: "కష్టపడినవాళ్లే చరిత్ర సృష్టిస్తారు." },
+      { category: "మోటివేషన్", text: "నీవు నమ్మిన దాన్ని సాధించవచ్చు." },
+      { category: "మోటివేషన్", text: "అవమానాన్ని ఆత్మవిశ్వాసంగా మార్చుకో." },
+      { category: "మోటివేషన్", text: "పరిమితుల్ని అధిగమించడానికి కృషి అవసరం." },
+      { category: "మోటివేషన్", text: "ప్రతి నిరాకరణ ఓ ప్రేరణ అవుతుంది." },
+      { category: "మోటివేషన్", text: "అనుభవం పెద్ద గురువు." },
+
+      // Love Quotes
+      { category: "ప్రేమ", text: "ప్రేమ నిజంగా ఉంటే మాటలు అవసరం ఉండవు." },
+      { category: "ప్రేమ", text: "మనసు కలిసే స్థలం ప్రేమ ఆలయం అవుతుంది." },
+      { category: "ప్రేమ", text: "ప్రేమలో నమ్మకమే మూలధనం." },
+      { category: "ప్రేమ", text: "ప్రేమ హృదయాన్ని మార్చగలదు." },
+      { category: "ప్రేమ", text: "ప్రేమ అనేది నిస్వార్థమైనది." },
+      { category: "ప్రేమ", text: "నిజమైన ప్రేమ సునామిలా కాదు, నదిలా ప్రవహిస్తుంది." },
+      { category: "ప్రేమ", text: "ప్రేమే జీవితానికి రంగులు ఇస్తుంది." },
+      { category: "ప్రేమ", text: "ప్రేమలో ప్రతి క్షణం మధురంగా ఉంటుంది." },
+      { category: "ప్రేమ", text: "మనసుతో ప్రేమిస్తే జీవితం ఆనందంగా ఉంటుంది." },
+      { category: "ప్రేమ", text: "ప్రేమ హృదయాన్ని నిండుస్తుంది." },
+
+      // Mother Quotes
+      { category: "అమ్మ", text: "అమ్మ ప్రేమకి భూమిపై సమానమే లేదు." },
+      { category: "అమ్మ", text: "అమ్మ మాటలలో ఆత్మవిశ్వాసం ఉంటుంది." },
+      { category: "అమ్మ", text: "అమ్మతో ఉండే ప్రతీ క్షణం వరమైతే సమానం." },
+      { category: "అమ్మ", text: "అమ్మ ఆశీస్సులతో జీవితం వెలుగొందుతుంది." },
+      { category: "అమ్మ", text: "అమ్మ ప్రేమకు పదాలు అవసరం ఉండవు." },
+      { category: "అమ్మ", text: "అమ్మ ఒక దేవత, ప్రేమ రూపం." },
+      { category: "అమ్మ", text: "అమ్మతో ఉన్నతంగా ఎదగవచ్చు." },
+      { category: "అమ్మ", text: "అమ్మను నమ్మడం అంటే దేవునిని నమ్మడమే." },
+      { category: "అమ్మ", text: "అమ్మ చిరునవ్వే జీవితం." },
+      { category: "అమ్మ", text: "అమ్మ ప్రేమ ఎప్పటికీ మారదు." }
+    ];
+
+    function showQuote() {
+      const random = Math.floor(Math.random() * quotes.length);
+      const quote = quotes[random];
+      document.getElementById('quote').textContent = quote.text;
+      document.getElementById('category').textContent = `వర్గం: ${quote.category}`;
+    }
+
+    window.onload = showQuote;
+  </script>
+</body>
+</html>
